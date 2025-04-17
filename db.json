@@ -64,7 +64,8 @@
       "id": "f27d544e-3b43-4b1f-bc8e-34a7ad94d3f4",
       "title": "sd",
       "description": "sdf",
-      "status": "done"
+      "status": "inprogress",
+      "order": 1
     },
     {
       "id": "0ca2ba5a-fdca-41df-90d3-54ebb0c2569b",
@@ -76,31 +77,36 @@
       "id": "2e198ead-ecd1-4597-9941-ead7a4b8fd1e",
       "title": "asd",
       "description": "asd",
-      "status": "inprogress"
+      "status": "done",
+      "order": 2
     },
     {
       "id": "d9ba3b3d-f8ca-4fbb-9c6f-2db6d7eb4993",
       "title": "zx",
       "description": "zx",
-      "status": "todo"
+      "status": "todo",
+      "order": 1
     },
     {
       "id": "fbb9",
       "title": "s",
       "description": "as",
-      "status": "inprogress"
+      "status": "done",
+      "order": 1
     },
     {
       "id": "64926679-a99c-4c28-af3e-7c0176365b79",
       "title": "aaa111ssasdfd",
       "description": "sdfsdf",
-      "status": "todo"
+      "status": "inprogress",
+      "order": 2
     },
     {
       "id": "756801e5-3fcd-4751-939d-abe193ded6d6",
       "title": "sdf",
       "description": "sdfsd",
-      "status": "inprogress"
+      "status": "inprogress",
+      "order": 3
     }
   ]
 }

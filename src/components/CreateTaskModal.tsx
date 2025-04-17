@@ -41,7 +41,7 @@ const dispatch = useDispatch();
   
   return (
     <Dialog open={open} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="sm:max-w-[425px] font-poppins">
         <form onSubmit={handleSubmit}>
           <DialogHeader>
             <DialogTitle>Create New Task</DialogTitle>

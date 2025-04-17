@@ -24,9 +24,9 @@ export default function TaskCard({task}: TaskCardProps) {
         style={style}
         {...attributes}
         {...listeners}
-        className="mb-4 cursor-grab"
+        className="mb-4 cursor-grab py-1"
       >
-        <CardHeader className="p-3">
+        <CardHeader className="px-3 pt-3 border-b-2 border-black/20 border-dashed pb-2">
           <CardTitle className="text-sm font-medium">{task.title}</CardTitle>
         </CardHeader>
         {task.description && (

@@ -55,6 +55,21 @@ const initialState: TasksState = {
     }
   });
 
+  export const reorderTasks = createAsyncThunk(
+    "tasks/reorderTasks", 
+    async (reorderedTasks: Task[], { rejectWithValue }) => {
+      try {
+        const responses = await Promise.all(
+          reorderedTasks.map(task => api.updateTask(task))
+        );
+        return responses;
+      } catch (error) {
+        const errorMessage = error instanceof Error ? error.message : "Failed to reorder tasks";
+        return rejectWithValue(errorMessage);
+      }
+    }
+  );
+
 
  const tasksSlice = createSlice({
     name: "tasks",
@@ -108,6 +123,23 @@ const initialState: TasksState = {
           state.tasks = state.tasks.filter((t) => t.id !== action.payload);
         })
         .addCase(deleteTask.rejected, (state, action) => {
+          state.loading = false;
+          state.error = action.payload as string;
+        })
+        .addCase(reorderTasks.pending, (state) => {
+          state.loading = true;
+          state.error = null;
+        })
+        .addCase(reorderTasks.fulfilled, (state, action) => {
+          state.loading = false;
+          action.payload.forEach(updatedTask => {
+            const index = state.tasks.findIndex(t => t.id === updatedTask.id);
+            if (index !== -1) {
+              state.tasks[index] = updatedTask;
+            }
+          });
+        })
+        .addCase(reorderTasks.rejected, (state, action) => {
           state.loading = false;
           state.error = action.payload as string;
         });

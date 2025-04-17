@@ -1,54 +1,85 @@
-# React + TypeScript + Vite
+# Task Management Dashboard
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A responsive Kanban-style task management dashboard built with TypeScript, Vite, and modern React libraries. Users can view tasks, create new tasks, and drag them between "To Do", "In Progress", and "Done" columns, with changes persisted via a mock REST API.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- ✅ 3-column Kanban board (To Do, In Progress, Done)  
+- 📝 Add new tasks using a modal form  
+- 🔄 Drag-and-drop tasks between columns and reorder within columns  
+- 🔗 Fetch and persist tasks via a mock REST API (`json-server`)  
+- 📱 Fully responsive for desktop and mobile screens  
 
-## Expanding the ESLint configuration
+## Technologies Used
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- **Frontend**: Vite, React, TypeScript  
+- **UI Components**: Tailwind CSS, [shadcn/ui](https://ui.shadcn.com/)  
+- **State Management**: Redux Toolkit (with async thunks)  
+- **Drag-and-Drop**: `@dnd-kit/core`, `@dnd-kit/sortable`  
+- **API**: `json-server` for simulating a REST API  
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+## Getting Started
+
+### Prerequisites
+
+- Node.js (v18 or higher)  
+- npm or yarn
+
+### Installation
+
+1. **Clone the repository**
+
+   ```bash
+   git clone https://github.com/your-username/task-management.git
+   cd task-management
+   ```
+
+2. **Install dependencies**
+
+   ```bash
+   npm install
+   ```
+
+3. **Start the mock API server**
+
+   ```bash
+   npm run server
+   ```
+
+   This will run `json-server` at [http://localhost:3001](http://localhost:3001)
+
+4. **Start the development server**
+
+   In a separate terminal:
+
+   ```bash
+   npm run dev
+   ```
+
+   This will start the Vite dev server at [http://localhost:5173](http://localhost:5173)
+
+> 🧪 Both servers need to run concurrently in separate terminals.
+
+## Folder Structure
+
+```
+src/
+├── components/        // UI components (TaskCard, Column, etc.)
+├── store/              // Redux slices and async thunks
+├── hooks/             // Custom React hooks (if any)
+├── types/             // TypeScript type definitions
+├── lib/             // Utility functions
+└── App.tsx            // Root component
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Future Improvements
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+- Add task filtering and search
+- Toast notifications for success/error states
+- Advanced task fields like due dates, priority, and assignees
+- Improved drag animations and mobile touch support
+- Accessibility enhancements
+- Unit and integration testing
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+
+

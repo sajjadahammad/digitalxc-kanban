@@ -14,7 +14,7 @@ import {
     useSensor,
     useSensors
 } from '@dnd-kit/core';
-import { fetchTasks, selectTasks, updateTask } from '../../store/slices/tasksSlice';
+import { fetchTasks, reorderTasks, selectTasks, updateTask } from '../../store/slices/tasksSlice';
 import { Task, TaskStatus } from '../../types';
 import Column from './Column';
 import TaskCard from './TaskCard';
@@ -50,25 +50,56 @@ export default function Canvas({ onAddTask }: TaskBoardProps) {
     };
 
     const handleDragEnd = (event: DragEndEvent) => {
-      // Removed event.preventDefault() as it is not applicable for DragEndEvent
-        setActiveTask(null);
-        
-        const { active, over } = event;
-        if (!over) return;
-        
-        const taskId = active.id;
-        const dropColumnId = over.id;
-        
-        if (dropColumnId === 'todo' || dropColumnId === 'inprogress' || dropColumnId === 'done') {
-          const task = tasks.find(t => t.id === taskId);
-          if (task && task.status !== dropColumnId) {
-            dispatch(updateTask({
-              ...task,
-              status: dropColumnId as TaskStatus
-            }));
-          }
+      setActiveTask(null);
+      const { active, over } = event;
+      
+      if (!over) return;
+      
+      const taskId = active.id;
+      const overItemId = over.id;
+      
+      if (overItemId === 'todo' || overItemId === 'inprogress' || overItemId === 'done') {
+        const task = tasks.find(t => t.id === taskId);
+        if (task && task.status !== overItemId) {
+          const tasksInNewColumn = tasks.filter(t => t.status === overItemId);
+          const maxOrder = tasksInNewColumn.length > 0 
+            ? Math.max(...tasksInNewColumn.map(t => t.order || 0)) 
+            : -1;
+          
+          dispatch(updateTask({
+            ...task,
+            status: overItemId as TaskStatus,
+            order: maxOrder + 1
+          }));
         }
-      };
+        return;
+      }
+      
+      const activeTask = tasks.find(t => t.id === taskId);
+      const overTask = tasks.find(t => t.id === overItemId);
+      
+      if (!activeTask || !overTask || activeTask.status !== overTask.status) return;
+      
+      const columnTasks = tasks
+        .filter(t => t.status === activeTask.status)
+        .sort((a, b) => (a.order || 0) - (b.order || 0));
+      
+      const activeIndex = columnTasks.findIndex(t => t.id === taskId);
+      const overIndex = columnTasks.findIndex(t => t.id === overItemId);
+      
+      if (activeIndex !== overIndex) {
+        const reordered = [...columnTasks];
+        const [movedTask] = reordered.splice(activeIndex, 1);
+        reordered.splice(overIndex, 0, movedTask);
+        
+        const updatedTasks = reordered.map((task, index) => ({
+          ...task,
+          order: index
+        }));
+        
+        dispatch(reorderTasks(updatedTasks));
+      }
+    };
 
       
       const todoTasks = tasks.filter(task => task.status === 'todo');
@@ -84,7 +115,7 @@ export default function Canvas({ onAddTask }: TaskBoardProps) {
         <div className="p-4">
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-bold text-white">Task Board</h1>
-        <Button onClick={onAddTask}>Add New Task</Button>
+        <Button onClick={onAddTask} className='bg-white/10 backdrop-blur-md border border-white/20 cursor-pointer'>Add New Task</Button>
       </div>
       
       <DndContext
