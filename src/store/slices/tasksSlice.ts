@@ -35,7 +35,7 @@ const initialState: TasksState = {
     }
   });
   
-  export const updateTask = createAsyncThunk("tasks/updateTask", async (task: Task, { rejectWithValue }) => {
+  export const updateTask = createAsyncThunk("tasks/updateTask", async (task: Task, {rejectWithValue }) => {
     try {
       const response = await api.updateTask(task);
       return response;

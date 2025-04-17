@@ -14,7 +14,6 @@ import {
     useSensor,
     useSensors
 } from '@dnd-kit/core';
-import { RootState } from '../../store/store';
 import { fetchTasks, selectTasks, updateTask } from '../../store/slices/tasksSlice';
 import { Task, TaskStatus } from '../../types';
 import Column from './Column';
@@ -51,6 +50,7 @@ export default function Canvas({ onAddTask }: TaskBoardProps) {
     };
 
     const handleDragEnd = (event: DragEndEvent) => {
+      // Removed event.preventDefault() as it is not applicable for DragEndEvent
         setActiveTask(null);
         
         const { active, over } = event;
@@ -70,6 +70,7 @@ export default function Canvas({ onAddTask }: TaskBoardProps) {
         }
       };
 
+      
       const todoTasks = tasks.filter(task => task.status === 'todo');
       const inProgressTasks = tasks.filter(task => task.status === 'inprogress');
       const doneTasks = tasks.filter(task => task.status === 'done');
@@ -82,7 +83,7 @@ export default function Canvas({ onAddTask }: TaskBoardProps) {
     return (
         <div className="p-4">
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold">Task Board</h1>
+        <h1 className="text-2xl font-bold text-white">Task Board</h1>
         <Button onClick={onAddTask}>Add New Task</Button>
       </div>
       
@@ -91,7 +92,7 @@ export default function Canvas({ onAddTask }: TaskBoardProps) {
         onDragStart={handleDragStart}
         onDragEnd={handleDragEnd}
       >
-        <div className="flex flex-col md:flex-row gap-4">
+        <div className="flex flex-col md:flex-row gap-4 justify-center">
           <Column title="To Do" tasks={todoTasks} status="todo" />
           <Column title="In Progress" tasks={inProgressTasks} status="inprogress" />
           <Column title="Done" tasks={doneTasks} status="done" />

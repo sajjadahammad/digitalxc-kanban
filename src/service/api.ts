@@ -1,6 +1,11 @@
 import axios from 'axios';
 import { Task } from '../types';
 
+window.addEventListener('beforeunload', (event) => {
+  console.log('Page is about to reload');
+  // This will help identify if it's actually a full page reload
+});
+
 const API_URL = 'http://localhost:3001/tasks';
 
 export const fetchTasks = async (): Promise<Task[]> => {
