@@ -7,7 +7,7 @@ import { AppDispatch } from '../../store/store';
 import {
     DndContext,
     DragEndEvent,
-    DragOverEvent,
+    // DragOverEvent,
     DragOverlay,
     DragStartEvent,
     PointerSensor,
