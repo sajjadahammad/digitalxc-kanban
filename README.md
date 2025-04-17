@@ -30,7 +30,7 @@ A responsive Kanban-style task management dashboard built with TypeScript, Vite,
 1. **Clone the repository**
 
    ```bash
-   git clone https://github.com/your-username/task-management.git
+   git clone https://github.com/sajjadahammad/digitalxc-kanban.git
    cd task-management
    ```
 
