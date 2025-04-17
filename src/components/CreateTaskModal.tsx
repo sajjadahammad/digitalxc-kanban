@@ -30,7 +30,8 @@ const dispatch = useDispatch();
       id: crypto.randomUUID(),
       title,
       description,
-      status
+      status,
+      order: Date.now()
     }));
     
     setTitle('');

@@ -1,5 +1,5 @@
 
-import Canvas from "./components/TaskBoard/canvas"
+import Canvas from "./components/TaskBoard/Canvas"
 import { CreateTaskModal } from "./components/CreateTaskModal"
 import { useState } from "react";
 
